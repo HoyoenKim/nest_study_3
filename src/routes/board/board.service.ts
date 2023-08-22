@@ -9,9 +9,6 @@ import { User } from 'src/entity/user.entity';
 @Injectable()
 export class BoardService {
     constructor(
-        @InjectRepository(User)
-        private readonly userRepository: Repository<User>,
-
         @InjectRepository(Board)
         private readonly boardRepository: Repository<Board>
     ) {}

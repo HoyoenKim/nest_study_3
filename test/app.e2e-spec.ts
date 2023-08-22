@@ -3,7 +3,7 @@ import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
 
-describe('AppController (e2e)', () => {
+describe('Board e2e Test', () => {
   let app: INestApplication;
 
   beforeEach(async () => {
@@ -15,10 +15,39 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  it('/ (GET)', () => {
-    return request(app.getHttpServer())
-      .get('/')
-      .expect(200)
-      .expect('Hello World!');
+  describe('AppController', () => {
+    it('/ (GET)', () => {
+      return request(app.getHttpServer())
+        .get('/')
+        .expect(200)
+        .expect('Hello World!');
+    });
+  
+    it('/name2?name=Hoyeon (GET)', () => {
+      return request(app.getHttpServer())
+        .get('/name2?name=Hoyeon')
+        .expect(200)
+        .expect(`Hello, Hoyeon!`);
+    });
+
+    it('login', () => {
+      return request(app.getHttpServer())
+      .post('/login')
+      .send({
+        username: 'hoyeonkim1',
+        password: '12345678'
+      })
+      .expect(201);
+    })
   });
+  
+  describe('BoardController', () => {
+    it('get board (GET)', () => {
+      return request(app.getHttpServer())
+        .get('/board')
+        .expect(200);
+    });
+  });
+
+  describe('UserController', () => {});
 });
