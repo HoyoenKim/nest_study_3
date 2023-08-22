@@ -1,6 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Board } from "./board.entity";
+import { Exclude } from "class-transformer";
 
 @Entity()
 export class User {
@@ -18,7 +19,8 @@ export class User {
         description: 'password',
         example: 'admin'
     })
-    @Column({ select: false })
+    @Column()
+    @Exclude()
     password: string;
 
     @ApiProperty({
@@ -33,4 +35,7 @@ export class User {
     })
     @OneToMany(() => Board, (board) => board.user)
     boards: Board[];
+
+    @Column({ select: false, nullable: true, insert: false, update: false })
+    boardCount?: number;
 }
